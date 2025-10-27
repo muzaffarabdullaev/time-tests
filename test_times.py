@@ -2,6 +2,7 @@
 
 from times import time_range, compute_overlap_time
 import datetime
+from pytest import raises
 
 # Homework test
 def test_given_input():
@@ -22,10 +23,18 @@ def test_non_overlap():
 
 # two time ranges that both contain several intervals each
 # NOT WORKING!
-def several_intervals_per_time():
-    time1 = time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00", 3, 0)
-    time2 = time_range("2010-01-12 11:00:00", "2010-01-12 13:00:00", 3, 0)
-    result = compute_overlap_time(time1, time2)
-    expected = [('2010-01-12 10:30:00', '2010-01-12 10:37:00'), ('2010-01-12 10:38:00', '2010-01-12 10:45:00')]
+#def several_intervals_per_time():
+#    time1 = time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00", 3, 0)
+#    time2 = time_range("2010-01-12 11:00:00", "2010-01-12 13:00:00", 3, 0)
+#    result = compute_overlap_time(time1, time2)
+#    expected = [('2010-01-12 10:30:00', '2010-01-12 10:37:00'), ('2010-01-12 10:38:00', '2010-01-12 10:45:00')]
 
 
+# negative test or if time range with backwards inputs
+def test_backwards_time():
+    time1 = time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00")
+    with raises(ValueError, match="Invalid input: make sure time ranges are not backwards."):
+        time2 = time_range("2010-01-12 13:00:00", "2010-01-12 11:00:00")
+        
+    
+    
